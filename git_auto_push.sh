@@ -41,9 +41,20 @@ rewrite_branch_history() {
     fi
   done < <(git rev-list --first-parent --min-parents=2 --since="$today_start" "$branch")
 
+  # Filter out empty commits (commits that change no files) from today's list
+  filtered_commits=()
+  for commit in "${today_commits[@]:-}"; do
+    if [ -n "$(git show --pretty=format: --name-only "$commit")" ]; then
+      filtered_commits+=("$commit")
+    else
+      echo "(rewrite) skipping empty commit $commit" >&2
+    fi
+  done
+  today_commits=("${filtered_commits[@]:-}")
+
   if [ "${#today_commits[@]}" -eq 0 ]; then
-    echo "Error: no commits found for today after creating the latest commit." >&2
-    exit 1
+    echo "No non-empty commits found for today; skipping history rewrite." >&2
+    return 0
   fi
 
   if [ "${#merge_commits[@]}" -gt 0 ]; then
