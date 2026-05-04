@@ -139,11 +139,9 @@ if [ -n "$PORCELAIN" ]; then
     git commit -m "$MSG"
   fi
 else
-  echo "No changes to commit. Creating empty commit." 
+  echo "No changes to commit. Skipping commit creation." 
   if [ "$DRY_RUN" -eq 1 ]; then
-    echo "DRY RUN: git commit --allow-empty -m \"$MSG\""
-  else
-    git commit --allow-empty -m "$MSG"
+    echo "DRY RUN: (would skip creating empty commit)"
   fi
 fi
 
