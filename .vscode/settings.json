@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "plyconfig.json": "jsonc"
+    },
+    "myjabis.ollama.prompter": "gemma4:e4b",
+    "myjabis.ollama.summarizer": "gemma2:9b-instruct-q4_K_M",
+    "myjabis.ollama.coder": "qwen2.5-coder:7b-instruct-q4_K_M",
+    "myjabis.ollama.vision": "qwen2.5vl:7b",
+    "myjabis.ollama.longtext": "nomic-embed-text"
+}
